@@ -4,6 +4,7 @@ import org.bouncycastle.i18n.filter.test.HTMLFilterTest;
 import org.bouncycastle.i18n.filter.test.SQLFilterTest;
 
 public class CTI18n {
+    static int involvedTestClassNum = 2;
     static int serviceFuncNum = 2;
     static HTMLFilterTest htmlFilterTest = new HTMLFilterTest();
     static SQLFilterTest sqlFilterTest = new SQLFilterTest();

@@ -5,6 +5,7 @@ import org.bouncycastle.util.utiltest.BigIntegersTest;
 import org.bouncycastle.util.utiltest.IPTest;
 
 public class CTUtil {
+    static int involvedTestClassNum = 3;
     static int serviceFuncNum = 5;
     static IPTest ipTest = new IPTest();
     static BigIntegersTest bigIntegersTest = new BigIntegersTest();

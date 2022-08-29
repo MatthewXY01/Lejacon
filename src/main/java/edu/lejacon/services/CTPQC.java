@@ -11,6 +11,7 @@ import org.bouncycastle.pqc.math.ntru.util.test.ArrayEncoderTest;
 
 
 public class CTPQC {
+    static int involvedTestClassNum = 32;
     static int serviceFuncNum = 98;
     static String[] involvedTestClassList = {
             "org.bouncycastle.pqc.crypto.lms.LMSKeyGenTests",

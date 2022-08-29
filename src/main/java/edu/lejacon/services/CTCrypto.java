@@ -7,6 +7,7 @@ import org.bouncycastle.util.test.SimpleTestResult;
 import static junit.framework.TestCase.fail;
 
 public class CTCrypto {
+    static int involvedTestClassNum=164;
     static int serviceFuncNum = 168;
     static String[] involvedTestClassList = {
             "org.bouncycastle.crypto.test.AESTest",

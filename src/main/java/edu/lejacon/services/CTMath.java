@@ -8,6 +8,7 @@ import org.bouncycastle.math.test.PrimesTest;
 
 
 public class CTMath {
+    static int involvedTestClassNum=5;
     static int serviceFuncNum = 19;
     static String[] involvedTestClassList = {
             "org.bouncycastle.math.test.PrimesTest",
@@ -16,7 +17,6 @@ public class CTMath {
             "org.bouncycastle.math.ec.test.FixedPointTest",
             "org.bouncycastle.math.raw.test.InterleaveTest"
     };
-    static int involvedTestClassNum = involvedTestClassList.length;
     static PrimesTest primesTest = new PrimesTest();
 
     static ECAlgorithmsTest ecAlgorithmsTest = new ECAlgorithmsTest();
