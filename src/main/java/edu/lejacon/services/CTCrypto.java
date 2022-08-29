@@ -177,7 +177,6 @@ public class CTCrypto {
     };
 
     static org.bouncycastle.util.test.Test[] tests = RegressionTest.tests;
-    static int regressionTestNum = tests.length;
 
     static GCMReorderTest gcmReorderTest = new GCMReorderTest();
 
@@ -187,8 +186,8 @@ public class CTCrypto {
 
     public void run() {
         System.out.println("run ct-crypto.");
-        for (int i = 0; i < regressionTestNum; i++) {
-            SimpleTestResult result = (SimpleTestResult) tests[i].perform();
+        for (org.bouncycastle.util.test.Test test:tests) {
+            SimpleTestResult result = (SimpleTestResult) test.perform();
             if (!result.isSuccessful()) {
                 if (result.getException() != null) {
                     result.getException().printStackTrace();
@@ -226,7 +225,6 @@ public class CTCrypto {
             throw new RuntimeException(e);
         }
         System.out.println("finish ct-crypto.");
-
     }
 
     public static void main(String[] args) {
