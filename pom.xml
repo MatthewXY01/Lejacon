@@ -15,8 +15,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>edu.lejacon</groupId>
-            <artifactId>bccoretest</artifactId>
+            <groupId>edu.lejacon.service</groupId>
+            <artifactId>bouncycastle-core-ut-4lejacon</artifactId>
             <version>1.0</version>
         </dependency>
 
