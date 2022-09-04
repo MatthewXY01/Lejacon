@@ -31,3 +31,108 @@ BouncyCastle APIs is included and packaged into [bouncycastle-core-ut-4lejacon-1
 Each application/program in the dataset provides 1~168 starting confidential methods that are called in the form of service requests.
 Each program in [this directory](src/main/java/edu/lejacon/services)
 summarizes the confidential method(s) of the corresponding benchmark into a `run` method, to display the functionalities of the service more intuitively.
+
+### Service Example
+An example of Hash service using BouncyCastle APIs.
+#### HashService.java (in TEE)
+```java
+package edu.lejacon.example.enclave;
+import edu.lejacon.enclave.annotations.EnclaveService;
+
+@EnclaveService
+public interface HashService {
+    String getHashValue(String alg, String message);
+}
+```
+#### HashServiceImpl.java (in TEE)
+
+```java
+package edu.lejacon.example.enclave;
+
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
+import java.security.MessageDigest;
+import java.security.Provider;
+import java.security.Security;
+
+public class HashServiceImpl implements HashService {
+    private final Provider PROVIDER;
+
+    public HashServiceImpl() {
+        Provider provider = Security.getProvider("BC");
+        if (provider != null) PROVIDER = provider;
+        else PROVIDER = new BouncyCastleProvider();
+        Security.addProvider(PROVIDER);
+    }
+
+    @Override
+    public String getHashValue(String alg, String message) {
+        String result;
+        if (message == null) return "Null message!";
+        byte[] msgBytes = message.getBytes();
+        try {
+            MessageDigest md = MessageDigest.getInstance(alg, "BC");
+            System.out.println(alg + " provider: " + md.getProvider());
+            result = doHash(md, msgBytes);
+        } catch (Exception e) {
+            System.out.println(e);
+            result = "Unsupported hash algorithms!";
+        }
+        return result;
+    }
+
+    private String doHash(MessageDigest md, byte[] msgBytes) {
+        md.update(msgBytes);
+        return bytesToHex(md.digest());
+    }
+
+    private String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+#### App.java (in REE)
+```java
+package edu.lejacon.example.host;
+
+import java.util.Iterator;
+import java.io.IOException;
+import java.nio.file.*;
+import edu.lejacon.example.enclave.HashService;
+import edu.lejacon.enclave.Enclave;
+import edu.lejacon.enclave.EnclaveFactory;
+
+public class App {
+    private static String readUsingFiles(String fileName) {
+        try {
+            return new String(Files.readAllBytes(Paths.get(fileName)));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static void main(String[] args) {
+        String fpath = args[1];
+        String alg = args[0];
+        String message = readUsingFiles(fpath);
+        Enclave enclave = EnclaveFactory.create();
+        Iterator<HashService> services = enclave.load(HashService.class);
+        while (services.hasNext()) {
+            HashService service = services.next();
+            System.out.println("request service: " + alg);
+            String result = service.getHashValue(alg, message);
+            System.out.println(result);
+        }
+        enclave.destroy();
+    }
+}
+```
+In this example, `HashService` is compiled into the Native Confidential Computing (NCC) service.
+The `getHashValue` method is a starting confidential method that can be called through ECall.
+`getHashValue` is executed in the TEE side, as well as the call chain inside such as [`doHash` &rarr; `bytesToHex`].  
