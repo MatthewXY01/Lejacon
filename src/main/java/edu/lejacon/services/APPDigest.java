@@ -32,7 +32,7 @@ public class APPDigest {
     }
     public void run() {
         System.out.println("run app-digest");
-        String message = readUsingFiles("/Users/mxinyuan/workspace/JavaSpace/LejaconService/src/main/resources/rand256K");
+        String message = readUsingFiles("/Users/mxinyuan/workspace/JavaSpace/LejaconService/src/main/resources/rand256K.txt");
         wrappedService("ALL", 1, message);
         System.out.println("finish app-digest");
     }
