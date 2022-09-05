@@ -60,8 +60,7 @@ public class HashServiceImpl implements HashService {
 
     public HashServiceImpl() {
         Provider provider = Security.getProvider("BC");
-        if (provider != null) PROVIDER = provider;
-        else PROVIDER = new BouncyCastleProvider();
+        PROVIDER = provider != null ? provider : new BouncyCastleProvider();
         Security.addProvider(PROVIDER);
     }
 
@@ -145,3 +144,158 @@ A demo of running the above Hash service on OcclumJ (_left_) and Lejacon (_right
 <img src="docs/images/demo_hash_occlumj.gif" width="48%" height="48%"/> <img src="docs/images/demo_hash_lejacon.gif" width="48%" height="48%"/>
 
 </center>
+
+## Experiment Result
+The table below lists the execution times for each benchmark on the baseline (BaseJ), OcclumJ and Lejacon.
+
+<table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
+    <col class="col0">
+    <col class="col1">
+    <col class="col2">
+    <col class="col3">
+    <col class="col4">
+    <col class="col5">
+    <col class="col6">
+    <col class="col7">
+    <col class="col8">
+    <col class="col9">
+    <tbody>
+      <tr class="row0">
+        <td class="column0 style20 s style21" rowspan="2">Benchmark</td>
+        <td class="column1 style18 s" style="text-align:center">BaseJ</td>
+        <td class="column2 style13 s style17" colspan="4" style="text-align:center">OcclumJ</td>
+        <td class="column6 style22 s style24" colspan="4" style="text-align:center">Lejacon</td>
+      </tr>
+      <tr class="row1">
+        <td class="column1 style2 s">ET (ms)</td>
+        <td class="column2 style1 s">ET (ms)</td>
+        <td class="column3 style1 s">ET_0 (ms)</td>
+        <td class="column4 style1 s">ET_1 (ms)</td>
+        <td class="column5 style2 s">ET_2 (ms)</td>
+        <td class="column6 style1 s">ET (ms)</td>
+        <td class="column7 style1 s">ET_0 (ms)</td>
+        <td class="column8 style1 s">ET_1 (ms)</td>
+        <td class="column9 style2 s">ET_2 (ms)</td>
+      </tr>
+      <tr class="row2">
+        <td class="column0 style19 s">app-print</td>
+        <td class="column1 style3 s">&lt;0.05</td>
+        <td class="column2 style4 n">6158.2</td>
+        <td class="column3 style4 s">&lt;0.05</td>
+        <td class="column4 style4 n">14.2</td>
+        <td class="column5 style3 n">6143.2</td>
+        <td class="column6 style4 n">384.7</td>
+        <td class="column7 style4 s">&lt;0.05</td>
+        <td class="column8 style4 s">&lt;0.05</td>
+        <td class="column9 style3 n">383.4</td>
+      </tr>
+      <tr class="row3">
+        <td class="column0 style5 s">app-digest</td>
+        <td class="column1 style6 n">171.1</td>
+        <td class="column2 style7 n">8902.5</td>
+        <td class="column3 style7 n">382.2</td>
+        <td class="column4 style7 n">160.8</td>
+        <td class="column5 style8 n">8352.2</td>
+        <td class="column6 style7 n">984</td>
+        <td class="column7 style7 n">105.7</td>
+        <td class="column8 style7 n">80.5</td>
+        <td class="column9 style8 n">777.9</td>
+      </tr>
+      <tr class="row4">
+        <td class="column0 style5 s">app-rsa</td>
+        <td class="column1 style6 n">345.4</td>
+        <td class="column2 style7 n">6779.6</td>
+        <td class="column3 style7 n">629.2</td>
+        <td class="column4 style7 n">30</td>
+        <td class="column5 style8 n">6119.3</td>
+        <td class="column6 style7 n">1146.6</td>
+        <td class="column7 style7 n">574.4</td>
+        <td class="column8 style7 n">2.2</td>
+        <td class="column9 style8 n">568.9</td>
+      </tr>
+      <tr class="row5">
+        <td class="column0 style5 s">app-sqlparser</td>
+        <td class="column1 style6 n">230.6</td>
+        <td class="column2 style7 n">6466.8</td>
+        <td class="column3 style7 n">327.4</td>
+        <td class="column4 style7 n">28.1</td>
+        <td class="column5 style8 n">6110.5</td>
+        <td class="column6 style7 n">452.9</td>
+        <td class="column7 style7 n">3.3</td>
+        <td class="column8 style7 n">0.7</td>
+        <td class="column9 style8 n">447.9</td>
+      </tr>
+      <tr class="row6">
+        <td class="column0 style5 s">ct-asn1</td>
+        <td class="column1 style6 n">749.5</td>
+        <td class="column2 style7 n">7746.3</td>
+        <td class="column3 style7 n">1493</td>
+        <td class="column4 style7 n">65.7</td>
+        <td class="column5 style8 n">6170.7</td>
+        <td class="column6 style7 n">612.9</td>
+        <td class="column7 style7 n">99</td>
+        <td class="column8 style7 n">11.7</td>
+        <td class="column9 style8 n">499.7</td>
+      </tr>
+      <tr class="row7">
+        <td class="column0 style5 s">ct-i18n</td>
+        <td class="column1 style6 s">&lt;0.05</td>
+        <td class="column2 style7 n">6191.3</td>
+        <td class="column3 style7 n">1.1</td>
+        <td class="column4 style7 n">14</td>
+        <td class="column5 style8 n">6152.6</td>
+        <td class="column6 style7 n">500.3</td>
+        <td class="column7 style7 s">&lt;0.05</td>
+        <td class="column8 style7 n">0.2</td>
+        <td class="column9 style8 n">497.3</td>
+      </tr>
+      <tr class="row8">
+        <td class="column0 style5 s">ct-util</td>
+        <td class="column1 style6 n">2.4</td>
+        <td class="column2 style7 n">6154.6</td>
+        <td class="column3 style7 n">6.1</td>
+        <td class="column4 style7 n">17.1</td>
+        <td class="column5 style8 n">6113.2</td>
+        <td class="column6 style7 n">491.6</td>
+        <td class="column7 style7 n">0.3</td>
+        <td class="column8 style7 n">1.7</td>
+        <td class="column9 style8 n">487.7</td>
+      </tr>
+      <tr class="row9">
+        <td class="column0 style5 s">ct-math</td>
+        <td class="column1 style14 n">4259</td>
+        <td class="column2 style7 n">14537.5</td>
+        <td class="column3 style7 n">7362.1</td>
+        <td class="column4 style7 n">52.7</td>
+        <td class="column5 style8 n">7098.7</td>
+        <td class="column6 style7 n">8713.9</td>
+        <td class="column7 style7 n">7037.7</td>
+        <td class="column8 style7 n">9.2</td>
+        <td class="column9 style8 n">1664.2</td>
+      </tr>
+      <tr class="row10">
+        <td class="column0 style5 s">ct-pqc</td>
+        <td class="column1 style6 n">10491</td>
+        <td class="column2 style15 n">20856.4</td>
+        <td class="column3 style7 n">13563.7</td>
+        <td class="column4 style7 n">128.4</td>
+        <td class="column5 style8 n">7144.8</td>
+        <td class="column6 style7 n">15617.6</td>
+        <td class="column7 style7 n">13929.9</td>
+        <td class="column8 style7 n">32.6</td>
+        <td class="column9 style16 n">1652.9</td>
+      </tr>
+      <tr class="row11">
+        <td class="column0 style9 s">ct-crypto</td>
+        <td class="column1 style10 n">12460</td>
+        <td class="column2 style11 n">27563.4</td>
+        <td class="column3 style11 n">20047.8</td>
+        <td class="column4 style11 n">170</td>
+        <td class="column5 style12 n">7328.3</td>
+        <td class="column6 style11 n">25776.3</td>
+        <td class="column7 style11 n">24013</td>
+        <td class="column8 style11 n">45</td>
+        <td class="column9 style12 n">1715.9</td>
+      </tr>
+    </tbody>
+</table>
