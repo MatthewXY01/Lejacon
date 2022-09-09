@@ -136,8 +136,8 @@ In this example, `HashService` is compiled into the Native Confidential Computin
 The `getHashValue` method is a starting confidential method that can be called through ECall.
 `getHashValue` is executed in the TEE side, as well as the call chain inside such as [`doHash` &rarr; `bytesToHex`].  
 
-#### Demo
-A demo of running the above Hash service on OcclumJ (_left_) and Lejacon (_right_).
+## Demo
+A demo of running the above [Hash service](#service-example) on OcclumJ (_left_) and Lejacon (_right_).
 
 <center class="half">
 
